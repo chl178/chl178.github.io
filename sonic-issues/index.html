@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>SONiC 候选 Issue 推荐</title>
+<style>
+:root{--bg:#f6f8fa;--card:#fff;--ink:#1f2328;--mut:#656d76;--line:#d8dee4;
+--blue:#0969da;--gold:#b45309;--green:#1a7f37;--amber:#9a6700;--gray:#57606a;--navy:#0a3069}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 60px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
+padding:2px 10px;font-size:12px;color:var(--mut)}
+h2.repo{font-size:17px;margin:26px 0 4px;display:flex;align-items:baseline;gap:10px}
+h2.repo a{color:var(--blue);text-decoration:none}
+.reposum{font-size:12px;color:var(--mut);margin-bottom:8px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:8px;overflow:hidden;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#eef1f4;font-size:12px;color:var(--mut)}
+tr:last-child td{border-bottom:none}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.badge{display:inline-block;border-radius:6px;padding:1px 7px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-star2{background:#fff3d6;color:var(--gold)} .b-star{background:#dafbe1;color:var(--green)}
+.b-warn{background:#fff8c5;color:var(--amber)} .b-no{background:#eaeef2;color:var(--gray)}
+.b-new{background:#ddf4ff;color:var(--navy)}
+.ttl{font-weight:600}.note{color:var(--mut);font-size:12px;margin-top:2px}
+.meta{color:var(--mut);font-size:12px;white-space:nowrap}
+.why{font-size:12px;color:var(--mut)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 0}
+.controls button{border:1px solid var(--line);background:var(--card);border-radius:8px;
+padding:5px 12px;font-size:13px;cursor:pointer;color:var(--ink)}
+.controls button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.controls input{border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:13px;flex:1;min-width:160px}
+.advice{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
+border-radius:8px;padding:12px 16px;margin:18px 0}
+.advice h2{font-size:15px;margin:0 0 8px}
+.advice .item{margin:8px 0;font-size:13px}
+.advice .rk{font-weight:700;color:var(--gold);margin-right:6px}
+details{background:var(--card);border:1px solid var(--line);border-radius:8px;margin-top:26px;padding:10px 16px}
+details summary{cursor:pointer;font-weight:600;font-size:14px}
+details table{margin-top:10px}
+footer{margin-top:30px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:12px}
+code{background:#eef1f4;border-radius:4px;padding:0 4px;font-size:12px}
+@media(max-width:720px){.hide-m{display:none}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top">
+<h1>SONiC 候选 Issue 推荐</h1>
+<div class="sub">生成时间 2026-11-08 09:19 UTC · 快照数据，动手前请 gh issue view 复核 · 由 issue-recommender skill 生成</div>
+<div class="chips">
+<span class="chip">状态 OPEN</span><span class="chip">无 assignee</span>
+<span class="chip">无任何 PR 关联（任意状态/形式一律剔除）</span><span class="chip">作者非 bot</span>
+<span class="chip">无 question/duplicate/stale 标签</span><span class="chip">评论无已修/认领措辞</span>
+</div>
+</header>
+
+<div class="advice"><h2>综合建议（结合本地流水线能力：swss/sairedis/python 仓可本地全测，无真机）</h2>
+<div class="item">⭐⭐<a href="https://github.com/sonic-net/sonic-swss/issues/5099" target="_blank">sonic-swss#5099</a> — orchagent RingBuffer/OrchDaemon 数据竞争（TSan 已实证）。唯一「完全本地闭环 + 零包袱」：现成 RingThread 测试 + 容器加 -fsanitize=thread 即可红绿迭代。建议尽快在 issue 下留言方案占位。</div>
+<div class="item">⭐<a href="https://github.com/sonic-net/sonic-buildimage/issues/30563" target="_blank">sonic-buildimage#30563</a> — 连字符命令 Tab 补全全坏，根因已定位到 #4163 引入的 generate_completions.py 只对程序名做大写拼变量名。修复落在 sonic-utilities，本地跑生成器/pytest 直接验证；提交 PR 时回链该 issue。</div>
+<div class="item">⭐<a href="https://github.com/sonic-net/sonic-mgmt/issues/28244" target="_blank">sonic-mgmt#28244</a> — ssh_limit.py 把字符串 OS 版本与整数 13 直接比较——一行类型修复，静态可证（标题是空的但正文完整）。动手前先读它 2 条评论确认无人接手。</div>
+<div class="item">备选<a href="https://github.com/sonic-net/sonic-swss/issues/4920" target="_blank">swss#4920 / #1384</a> — #4920 SW PFCWD 轮询时延假设（逻辑可推理、验证偏真机）；#1384 测试去 32 端口硬编码（本地可跑，6 年老）。</div>
+<div class="item">现实严格过滤后「干净且值得做」的池子本来就薄——遇到 ⭐⭐ 级机会（#5099）应尽快出手。#4552/#4375/#28905 这类「核实已修、请求关闭」可作为低成本社区互动。</div>
+</div>
+
+<div class="controls">
+<button data-f="all" class="on">全部</button>
+<button data-f="star">推荐</button>
+<button data-f="warn">谨慎</button>
+<button data-f="no">不建议</button>
+<button data-f="new">待深析</button>
+<input id="q" type="search" placeholder="搜索标题 / 标签 / 理由 / 编号…">
+</div>
+
+<div id="repos"></div>
+
+<details><summary>为什么这么严？——本轮被剔除的典型案例（已修未关 / 评论认领 / PR 关联）</summary>
+<table><tr><th>Issue</th><th>类型</th><th>证据</th></tr><tr><td>utilities#4375</td><td>已修未关</td><td>PR #4376 &quot;Fix counterpoll CLI when running in a namespace&quot; 已于 2026-03-26 合并（issue 没用 fixes 关键字）</td></tr>
+<tr><td>mgmt#28905</td><td>已修未关</td><td>PR #28906 &quot;Fix wrong skip conditions in test_buffer.py&quot; 已于 2026-10-30 合并</td></tr>
+<tr><td>mgmt#28975</td><td>已修未关</td><td>PR #28995 &quot;Allow immediate startup for air-cooled switch-host&quot; 已于 2026-11-05 合并</td></tr>
+<tr><td>utilities#4968</td><td>评论认领+已修</td><td>报告者评论 &quot;I already have fix for this issue, I am in the process of raising a PR&quot;；其 PR #4972 已合并</td></tr>
+<tr><td>utilities#4768</td><td>maintainer 已按在修处理</td><td>bingwang-ms：&quot;No need to raise another PR since there is already one&quot;（尽管其依据的 PR 链接是错的）</td></tr>
+<tr><td>utilities#4480</td><td>评论认领+已修</td><td>&quot;Happy to make a PR&quot; + &quot;Seems like this is closed by ...pull/4452&quot;</td></tr>
+<tr><td>buildimage#29079</td><td>评论称已修</td><td>&quot;which is fixed by above PR&quot;（sairedis PR #2066 在途挂起）</td></tr>
+<tr><td>buildimage#21668</td><td>部分已修</td><td>&quot;fixed in ...pull/21456 (just need someone to merge)&quot;；PR 已合并</td></tr>
+<tr><td>mgmt#28494</td><td>正文认领</td><td>报告者正文 &quot;I can submit a PR for this&quot;</td></tr>
+<tr><td>mgmt#28230</td><td>点名认领</td><td>maintainer 评论 @preethi-rangian &quot;can you create a PR for skipping these via mark conditions?&quot;</td></tr>
+<tr><td>utilities#4905</td><td>作者自有 PR</td><td>正文链接了作者自己的 open PR #4904（未被 GitHub 识别为 linked）</td></tr>
+<tr><td>swss#5080</td><td>评论提及 open PR</td><td>正文引用 open PR #4772（部分重叠的修复在途）</td></tr>
+<tr><td>swss#5094/#5085/#5086</td><td>前作已合</td><td>均为已合并 PR #4857 作者的 follow-up 挂账（跨 FRR）</td></tr></table>
+</details>
+
+<footer>
+数据为生成时刻的 GitHub 快照：assignee / PR 关联随时会变。<b>动手前必做</b>：
+<code>gh issue view &lt;编号&gt; --repo OWNER/REPO --comments</code> 与
+<code>gh pr list --repo OWNER/REPO --state open --search "&lt;编号&gt;"</code>。<br>
+重新生成：在 SONiC 工作区跑 <code>issue-recommender</code> skill（recommend-issues.sh → build-site.py → push）。
+</footer>
+</div>
+<script>
+const DATA = {"generated": "2026-11-08 09:19", "repos": [{"repo": "sonic-net/sonic-buildimage", "summary": "远端 open issue：1878｜本次扫描（按最近活动倒序）：200｜通过硬性过滤：26（再剔除：PR关联(任意状态) 53 · 评论已修措辞 0 · 近120天认领 0）", "issues": [{"score": 7, "num": 30096, "url": "https://github.com/sonic-net/sonic-buildimage/issues/30096", "title": "Bug: Redis 7.0.15 crashes with SIGSEGV in _sdsnewlen() during HSET keyspace notification on multi-ASIC system", "labels": "Bug :bug:,Help Wanted :sos:,Triaged", "comments": "1", "age": "27/3天", "reasons": "help-wanted 近30天活跃 新issue 讨论少"}, {"score": 6, "num": 23386, "url": "https://github.com/sonic-net/sonic-buildimage/issues/23386", "title": "Bug: connection with zebra from fpsyncd drops intermittently", "labels": "Bug :bug:,Help Wanted :sos:,FRR :traffic_light:,Triaged,routing,Issues for 202511,issues for 202605", "comments": "10", "age": "477/16天", "reasons": "help-wanted 近30天活跃 讨论少"}, {"score": 5, "num": 28832, "url": "https://github.com/sonic-net/sonic-buildimage/issues/28832", "title": "Bug: [QoS][TD3] TC-to-PG mapping register behavior inconsistent with configuration", "labels": "Bug :bug:,Help Wanted :sos:,Triaged", "comments": "0", "age": "96/73天", "reasons": "help-wanted 近90天活跃 讨论少"}, {"score": 4, "num": 30577, "url": "https://github.com/sonic-net/sonic-buildimage/issues/30577", "title": "Bug: on Broadcom TDx based platform orchagent exits after syncd loss during test_qos_sai PFC - supervisor-proc-exit-listener \"not running\"", "labels": "Bug :bug:", "comments": "0", "age": "1/1天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 30563, "url": "https://github.com/sonic-net/sonic-buildimage/issues/30563", "title": "Bug: [sonic-utilities] Tab completion broken for hyphenated commands (sonic-clear, sonic-installer, sonic-package-manager, acl-loader, sonic-cli-gen)", "labels": "Bug :bug:", "comments": "0", "age": "2/2天", "reasons": "近30天活跃 新issue 讨论少"}]}, {"repo": "sonic-net/sonic-mgmt", "summary": "远端 open issue：1508｜本次扫描（按最近活动倒序）：200｜通过硬性过滤：5（再剔除：PR关联(任意状态) 74 · 评论已修措辞 0 · 近120天认领 1）", "issues": [{"score": 4, "num": 28938, "url": "https://github.com/sonic-net/sonic-mgmt/issues/28938", "title": "Bug: test_dynamic_acl: DYNAMIC_ACL_TABLE_TYPE with 11 match fields exceeds TCAM flex key capacity on some platforms", "labels": "Bug :bug:", "comments": "0", "age": "9/9天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 28478, "url": "https://github.com/sonic-net/sonic-mgmt/issues/28478", "title": "Test Gap: No coverage for docker.service restart duration", "labels": "Pending Triage :medical_symbol:,Test gap", "comments": "0", "age": "30/10天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 28327, "url": "https://github.com/sonic-net/sonic-mgmt/issues/28327", "title": "Bug:[snappi][bgp] test_bgp_scalability_100kv4_25kv6_routes intermittently fails with traffic loss: traffic starts before routes are programmed in ASIC", "labels": "Bug :bug:,Pending Triage :medical_symbol:", "comments": "0", "age": "38/10天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 28244, "url": "https://github.com/sonic-net/sonic-mgmt/issues/28244", "title": "Bug:", "labels": "Bug :bug:,Pending Triage :medical_symbol:", "comments": "2", "age": "41/10天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 28230, "url": "https://github.com/sonic-net/sonic-mgmt/issues/28230", "title": "ECMP IPv6-IPv6 Inner Hashing Test Cases on Unsupported Platforms skipped, Until Feature Support Is Added", "labels": "Pending Triage :medical_symbol:,Test gap", "comments": "1", "age": "44/10天", "reasons": "近30天活跃 新issue 讨论少"}]}, {"repo": "sonic-net/sonic-swss", "summary": "远端 open issue：296｜本次扫描（按最近活动倒序）：200｜通过硬性过滤：77（再剔除：PR关联(任意状态) 88 · 评论已修措辞 0 · 近120天认领 0）", "issues": [{"score": 4, "num": 5099, "url": "https://github.com/sonic-net/sonic-swss/issues/5099", "title": "[orchagent] Fix data races in RingBuffer / OrchDaemon ring-thread lifecycle", "labels": "-", "comments": "0", "age": "3/3天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 5051, "url": "https://github.com/sonic-net/sonic-swss/issues/5051", "title": "[fdbsyncd/fpmsyncd/fdborch]: Drop the CFG_FDB_SYNC_TABLE_NAME fallback once swss-common generates it", "labels": "-", "comments": "0", "age": "15/12天", "reasons": "近30天活跃 新issue 讨论少"}, {"score": 4, "num": 1384, "url": "https://github.com/sonic-net/sonic-swss/issues/1384", "title": "Many tests are hard-coded to assume 32 ports", "labels": "Enhancement :heavy_plus_sign:,Help Wanted,Testing,DVS :star:", "comments": "0", "age": "2284/2284天", "reasons": "help-wanted enhancement -一年未动 讨论少"}, {"score": 3, "num": 4920, "url": "https://github.com/sonic-net/sonic-swss/issues/4920", "title": "Bug: [SW PFCWD] detect and restore action latency due to assumed poll_time interval", "labels": "-", "comments": "0", "age": "46/46天", "reasons": "近90天活跃 新issue 讨论少"}, {"score": 1, "num": 4783, "url": "https://github.com/sonic-net/sonic-swss/issues/4783", "title": "[EVPN Multihoming] orchagent fails to create L2 Next Hop Group of type Bridge port — SAI returns \"Unsupported nexthop group type 7\" (SAI_STATUS_INVALID_ATTR_VALUE_0)", "labels": "-", "comments": "0", "age": "108/108天", "reasons": "讨论少"}]}, {"repo": "sonic-net/sonic-utilities", "summary": "远端 open issue：55｜本次扫描（按最近活动倒序）：55｜通过硬性过滤：8（再剔除：PR关联(任意状态) 40 · 评论已修措辞 0 · 近120天认领 0）", "issues": [{"score": 3, "num": 4552, "url": "https://github.com/sonic-net/sonic-utilities/issues/4552", "title": "\"show chassis module status\" incorrectly shows Admin Up status when config_db is not populated.", "labels": "-", "comments": "0", "age": "173/23天", "reasons": "近30天活跃 讨论少"}, {"score": 1, "num": 4352, "url": "https://github.com/sonic-net/sonic-utilities/issues/4352", "title": "Security Issues in SONiC (sonic-utilities) code", "labels": "-", "comments": "1", "age": "240/221天", "reasons": "讨论少"}, {"score": 1, "num": 4371, "url": "https://github.com/sonic-net/sonic-utilities/issues/4371", "title": "fast-reboot and warm-reboot work improperly if called as root", "labels": "-", "comments": "1", "age": "233/233天", "reasons": "讨论少"}, {"score": 1, "num": 4239, "url": "https://github.com/sonic-net/sonic-utilities/issues/4239", "title": "libyang dependency check failure for back reference in the build test scripts", "labels": "-", "comments": "3", "age": "278/241天", "reasons": "讨论少"}, {"score": 1, "num": 4254, "url": "https://github.com/sonic-net/sonic-utilities/issues/4254", "title": "SONiC Utilities Build Takes Long Time", "labels": "-", "comments": "0", "age": "274/274天", "reasons": "讨论少"}]}], "verdicts": {"sonic-net/sonic-buildimage#30096": {"v": "no", "note": "根因在上游 Redis/jemalloc 堆损坏，无法复现，SONiC 侧无可修点；评论已建议转 Redis 社区跟踪"}, "sonic-net/sonic-buildimage#23386": {"v": "warn", "note": "fpmsyncd↔zebra FPM 间歇断连；MSFT 多人活跃跟进（另见 FRRouting/frr#19464），动手前必须先对齐；swss 侧逻辑可本地单测"}, "sonic-net/sonic-buildimage#28832": {"v": "no", "note": "TD3 寄存器级差异，需 bcmcmd 真机，大概率要 Broadcom 介入"}, "sonic-net/sonic-buildimage#30577": {"v": "no", "note": "Broadcom TDx 平台特定（syncd 丢失后 orchagent 退出），复现需真机 + test_qos_sai"}, "sonic-net/sonic-buildimage#30563": {"v": "star", "note": "根因已定位：#4163 的 generate_completions.py 只对程序名做大写拼 bash 补全变量名，连字符命令（sonic-clear/sonic-installer/acl-loader 等）全坏；修在 sonic-utilities，本地可验，0 评论零包袱 → utilities 侧最干净的新首选"}, "sonic-net/sonic-mgmt#28938": {"v": "warn", "note": "把 DYNAMIC_ACL_TABLE_TYPE 按用例拆成多个小 table type；重构可离线做，验收需真实 TCAM 平台；先与 #28603 作者对齐拆分方案"}, "sonic-net/sonic-mgmt#28478": {"v": "warn", "note": "新增 docker.service 重启时长测试必须实机跑；阈值选取（不引入 flaky）需先社区共识"}, "sonic-net/sonic-mgmt#28327": {"v": "no", "note": "snappi/IxNetwork 流量时序问题（路由未编程完流量已启动），需 TGEN 测试床"}, "sonic-net/sonic-mgmt#28244": {"v": "star", "note": "ssh/test_ssh_limit.py 把字符串版本（AnsibleUnsafeText）与整数 13 直接比较——一行类型修复，静态可证；动手前先读 2 条评论"}, "sonic-net/sonic-mgmt#28230": {"v": "no", "note": "评论里 maintainer 已 @preethi-rangian 「can you create a PR for skipping these」——事实点名认领；且 Marvell TL 平台测试"}, "sonic-net/sonic-swss#5099": {"v": "star2", "note": "TSan 已实证的 RingBuffer/OrchDaemon ring 线程数据竞争；现成 RingThread 测试 + swss-build 容器加 -fsanitize=thread 重编译即可本地 TDD；纯 swss 内部、无硬件依赖、3 天新零包袱"}, "sonic-net/sonic-swss#5051": {"v": "no", "note": "删 CFG_FDB_SYNC_TABLE_NAME fallback 的 cleanup；依赖链 buildimage#30365→swss-common 未合；dMOR 系列作者自留"}, "sonic-net/sonic-swss#1384": {"v": "warn", "note": "测试硬编码 32 端口（含 DVS conftest）——具体测试重构任务，swss 测试设施本地可跑；6 年老但需求仍真实"}, "sonic-net/sonic-swss#4920": {"v": "warn", "note": "SW PFCWD lua 脚本假设 poll_time 精确，CPU 忙时暂停时长算错；逻辑修复可推理（flex counter lua 在 sairedis），完整验证偏真机"}, "sonic-net/sonic-swss#4783": {"v": "no", "note": "SAI 返回 nexthop group type 7 不支持——疑 ASIC/SAI 限制，需 vendor 判断"}, "sonic-net/sonic-utilities#4552": {"v": "no", "note": "症状疑似已被 PR #4611 的 SWITCH-HOST 默认 down 分支修复（issue 遗留）；可低成本留言核实请求关闭"}, "sonic-net/sonic-utilities#4352": {"v": "no", "note": "安全漏洞汇总 meta issue，治理类非代码修复"}, "sonic-net/sonic-utilities#4371": {"v": "warn", "note": "root 直调 fast/warm-reboot 行为错（SUDO_USER/XDG 语义）——真 bug，验证需真机重启循环"}, "sonic-net/sonic-utilities#4239": {"v": "warn", "note": "libyang back-reference 依赖检查测试失败；评论区已有人表示在复现（I'll see if I can reproduce），先跟进确认"}, "sonic-net/sonic-utilities#4254": {"v": "warn", "note": "mock_table 假设 ./tests/mock_tables 路径导致 pytest-xdist 并行损坏——测试基建并行化改造，本地可验证；274 天无进展，社区兴趣一般"}}, "advice": [{"rank": "⭐⭐", "issue": "sonic-swss#5099", "url": "https://github.com/sonic-net/sonic-swss/issues/5099", "text": "orchagent RingBuffer/OrchDaemon 数据竞争（TSan 已实证）。唯一「完全本地闭环 + 零包袱」：现成 RingThread 测试 + 容器加 -fsanitize=thread 即可红绿迭代。建议尽快在 issue 下留言方案占位。"}, {"rank": "⭐", "issue": "sonic-buildimage#30563", "url": "https://github.com/sonic-net/sonic-buildimage/issues/30563", "text": "连字符命令 Tab 补全全坏，根因已定位到 #4163 引入的 generate_completions.py 只对程序名做大写拼变量名。修复落在 sonic-utilities，本地跑生成器/pytest 直接验证；提交 PR 时回链该 issue。"}, {"rank": "⭐", "issue": "sonic-mgmt#28244", "url": "https://github.com/sonic-net/sonic-mgmt/issues/28244", "text": "ssh_limit.py 把字符串 OS 版本与整数 13 直接比较——一行类型修复，静态可证（标题是空的但正文完整）。动手前先读它 2 条评论确认无人接手。"}, {"rank": "备选", "issue": "swss#4920 / #1384", "url": "https://github.com/sonic-net/sonic-swss/issues/4920", "text": "#4920 SW PFCWD 轮询时延假设（逻辑可推理、验证偏真机）；#1384 测试去 32 端口硬编码（本地可跑，6 年老）。"}, {"rank": "现实", "issue": "", "url": "", "text": "严格过滤后「干净且值得做」的池子本来就薄——遇到 ⭐⭐ 级机会（#5099）应尽快出手。#4552/#4375/#28905 这类「核实已修、请求关闭」可作为低成本社区互动。"}], "excluded": [{"issue": "utilities#4375", "kind": "已修未关", "evidence": "PR #4376 \"Fix counterpoll CLI when running in a namespace\" 已于 2026-03-26 合并（issue 没用 fixes 关键字）"}, {"issue": "mgmt#28905", "kind": "已修未关", "evidence": "PR #28906 \"Fix wrong skip conditions in test_buffer.py\" 已于 2026-10-30 合并"}, {"issue": "mgmt#28975", "kind": "已修未关", "evidence": "PR #28995 \"Allow immediate startup for air-cooled switch-host\" 已于 2026-11-05 合并"}, {"issue": "utilities#4968", "kind": "评论认领+已修", "evidence": "报告者评论 \"I already have fix for this issue, I am in the process of raising a PR\"；其 PR #4972 已合并"}, {"issue": "utilities#4768", "kind": "maintainer 已按在修处理", "evidence": "bingwang-ms：\"No need to raise another PR since there is already one\"（尽管其依据的 PR 链接是错的）"}, {"issue": "utilities#4480", "kind": "评论认领+已修", "evidence": "\"Happy to make a PR\" + \"Seems like this is closed by ...pull/4452\""}, {"issue": "buildimage#29079", "kind": "评论称已修", "evidence": "\"which is fixed by above PR\"（sairedis PR #2066 在途挂起）"}, {"issue": "buildimage#21668", "kind": "部分已修", "evidence": "\"fixed in ...pull/21456 (just need someone to merge)\"；PR 已合并"}, {"issue": "mgmt#28494", "kind": "正文认领", "evidence": "报告者正文 \"I can submit a PR for this\""}, {"issue": "mgmt#28230", "kind": "点名认领", "evidence": "maintainer 评论 @preethi-rangian \"can you create a PR for skipping these via mark conditions?\""}, {"issue": "utilities#4905", "kind": "作者自有 PR", "evidence": "正文链接了作者自己的 open PR #4904（未被 GitHub 识别为 linked）"}, {"issue": "swss#5080", "kind": "评论提及 open PR", "evidence": "正文引用 open PR #4772（部分重叠的修复在途）"}, {"issue": "swss#5094/#5085/#5086", "kind": "前作已合", "evidence": "均为已合并 PR #4857 作者的 follow-up 挂账（跨 FRR）"}]};
+const VMAP = {"star2":["⭐⭐ 首推","b-star2"],"star":["⭐ 推荐","b-star"],"warn":["⚠️ 谨慎","b-warn"],"no":["❌ 不建议","b-no"],"new":["◎ 待深析","b-new"]};
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function verdict(repo,num){return DATA.verdicts[repo+"#"+num]||null}
+function rows(repo){
+  return repo.issues.map(it=>{
+    const v=verdict(repo.repo,it.num), k=(v&&VMAP[v.v])?v.v:"new";
+    const vd=VMAP[k];
+    const age=it.age.replace("天","");
+    return `<tr data-v="${k}"><td><span class="badge ${vd[1]}">${vd[0]}</span><div class="meta">${it.score}分</div></td>`+
+      `<td class="ttl"><a href="${it.url}" target="_blank">#${it.num}</a> ${esc(it.title)}`+
+      `<div class="note">${v?esc(v.note):""}</div></td>`+
+      `<td class="why">${esc(it.labels=="-"?"—":it.labels)}<div class="meta">${it.comments}评 · 创建/静置 ${age} 天</div></td>`+
+      `<td class="why hide-m">${esc(it.reasons)}</td></tr>`;
+  }).join("");
+}
+function render(){
+  let h="";
+  for(const r of DATA.repos){
+    h+=`<h2 class="repo"><a href="https://github.com/${r.repo}" target="_blank">${r.repo}</a></h2>`;
+    h+=`<div class="reposum">${esc(r.summary)}</div>`;
+    h+=`<table><tr><th style="width:86px">判定</th><th>Issue</th><th style="width:170px" class="hide-m">标签</th><th class="hide-m">机制理由</th></tr>${rows(r)}</table>`;
+  }
+  document.getElementById("repos").innerHTML=h; apply();
+}
+let F="all";
+function apply(){
+  const q=document.getElementById("q").value.trim().toLowerCase();
+  document.querySelectorAll("#repos tr[data-v]").forEach(tr=>{
+    const okF=(F=="all"||(F=="star"?(tr.dataset.v=="star"||tr.dataset.v=="star2"):tr.dataset.v==F));
+    const okQ=!q||tr.textContent.toLowerCase().includes(q);
+    tr.style.display=(okF&&okQ)?"":"none";
+  });
+  document.querySelectorAll("table tr").forEach(tr=>{if(!tr.dataset.v&&!tr.textContent.match(/判定|Issue/)){}});
+  document.querySelectorAll("#repos table").forEach(t=>{
+    let any=false;t.querySelectorAll("tr[data-v]").forEach(r=>{if(r.style.display!="none")any=true});
+    t.style.display=any?"":"none";
+  });
+  document.querySelectorAll("#repos h2.repo,#repos .reposum").forEach(el=>{
+    let el2=el.nextElementSibling,any=false;
+    while(el2&&el2.tagName!="H2"){if(el2.tagName=="TABLE"&&el2.style.display!="none")any=true;el2=el2.nextElementSibling}
+    el.style.display=any?"":"none";
+  });
+}
+document.querySelectorAll(".controls button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".controls button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");F=b.dataset.f;apply();
+});
+document.getElementById("q").oninput=apply;
+render();
+</script>
+</body></html>
